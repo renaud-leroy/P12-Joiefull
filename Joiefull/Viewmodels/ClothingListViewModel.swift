@@ -21,12 +21,18 @@ final class ClothingListViewModel: ObservableObject {
     }
     
     @MainActor
-    func loadClothing() async {
+    func loadClothes() async {
         do {
-            let result = try await service.fetchClothes()
-            clothes = result
+            let fetchedClothes: [Clothing] = try await service.fetchClothes()
+            clothes = fetchedClothes
+            print("Loaded clothes: \(fetchedClothes.count)")
         } catch {
             errorMessage = "Erreur de chargement"
         }
-    } 
+    }
+    
+    
+    func filteredClothes(for category: ClothingCategory) -> [Clothing] {
+        clothes.filter { $0.category == category }
+    }
 }

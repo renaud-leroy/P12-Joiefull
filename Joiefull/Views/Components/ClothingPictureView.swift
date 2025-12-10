@@ -12,30 +12,20 @@ struct ClothingPictureView: View {
     let clothing: Clothing
     
     var body: some View {
-        AsyncImage(url: URL(string: clothing.picture.url)) { phase in
-            switch phase {
-            case .empty:
-                ProgressView()
-            case .success(let image):
-                image
-                    .resizable()
-                    .scaledToFill()
-            case .failure:
-                Image(systemName: "photo")
-                    .resizable()
-                    .scaledToFit()
-                    .foregroundColor(.gray)
-            @unknown default:
-                EmptyView()
-            }
+        AsyncImage(url: URL(string: clothing.picture.url)) { image in
+            image
+                .resizable()
+                .aspectRatio(contentMode: .fill)
+                .clipped()
+        } placeholder: {
+            ProgressView()
         }
-        .clipped()
     }
 }
 
 #Preview {
     let picture = Picture(url: "imagemock", description: "Pull vert forêt à motif torsadé élégant, tricot finement travaillé avec manches bouffantes et col montant; doux et chaleureux.")
-    let clothing = Clothing(id: 1, picture: picture, name: "Pull torsadé", category: "Bas", likes: 56, price: 69.0, original_price: 95.0)
+    let clothing = Clothing(id: 1, picture: picture, name: "Pull torsadé", category: .tops, likes: 56, price: 69.0, original_price: 95.0)
     
     ClothingPictureView(clothing: clothing)
 }

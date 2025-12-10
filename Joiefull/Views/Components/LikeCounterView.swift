@@ -12,11 +12,11 @@ struct LikeCounterView: View {
     let clothing: Clothing
     
     var body: some View {
-        HStack(spacing: 4) {
+        HStack(spacing: 2) {
             Image(systemName: "heart")
             Text("\(clothing.likes)")
         }
-        .font(Font.caption.bold())
+        .font(.system(size: 13, weight: .medium))
         .padding(6)
         .background(Color(.white))
         .clipShape(Capsule())
@@ -26,7 +26,7 @@ struct LikeCounterView: View {
 
 #Preview {
     let picture = Picture(url: "imagemock", description: "Pull vert forêt à motif torsadé élégant, tricot finement travaillé avec manches bouffantes et col montant; doux et chaleureux.")
-    let clothing = Clothing(id: 1, picture: picture, name: "Pull torsadé", category: "Bas", likes: 56, price: 69.0, original_price: 95.0)
+    let clothing = Clothing(id: 1, picture: picture, name: "Pull torsadé", category: .tops, likes: 56, price: 69.0, original_price: 95.0)
     
     LikeCounterView(clothing: clothing)
 }

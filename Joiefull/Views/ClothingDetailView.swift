@@ -12,11 +12,10 @@ struct ClothingDetailView: View {
     let clothing: Clothing
     
     var body: some View {
-        VStack {
-            ZStack {
+        VStack(alignment: .leading) {
                 ClothingPictureView(clothing: clothing)
                     .scaledToFill()
-                    .frame(maxWidth: .infinity, maxHeight: 480)
+                    .frame(maxWidth: .infinity, maxHeight: 420)
                     .cornerRadius(20)
                     .overlay(alignment: .topTrailing) {
                         ShareButtonView()
@@ -25,28 +24,28 @@ struct ClothingDetailView: View {
                     .overlay(alignment: .bottomTrailing) {
                         LikeCounterView(clothing: clothing)
                             .padding(20)
+                            .scaleEffect(1.2)
                     }
-            }
+            
             PriceView(clothing: clothing)
                 .padding(.vertical, 10)
+                .font(.system(size: 16))
             Text(clothing.picture.description)
-                .font(Font.subheadline)
+                .font(.system(size: 14, weight: .regular))
             HStack {
                 RatingView()
                 Spacer()
             }
-            .padding(10)
-            
+            .padding(.vertical)
             TextField("Partagez ici vos impressions sur cette pièce", text: .constant(""))
                 .textFieldStyle(RoundedBorderTextFieldStyle())
         }
-        .padding(.horizontal)
     }
 }
 
 #Preview {
     let picture = Picture(url: "imagemock", description: "Pull vert forêt à motif torsadé élégant, tricot finement travaillé avec manches bouffantes et col montant; doux et chaleureux.")
-    let clothing = Clothing(id: 1, picture: picture, name: "Pull torsadé", category: "Bas", likes: 56, price: 69.0, original_price: 95.0)
+    let clothing = Clothing(id: 1, picture: picture, name: "Pull torsadé", category: .tops, likes: 56, price: 69.0, original_price: 95.0)
     
     ClothingDetailView(clothing: clothing)
 }
