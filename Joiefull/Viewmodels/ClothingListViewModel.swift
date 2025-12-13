@@ -6,13 +6,15 @@
 //
 
 import Foundation
-import Combine
+import Observation
 
-final class ClothingListViewModel: ObservableObject {
+@MainActor
+@Observable
+final class ClothingListViewModel {
     
-    @Published var errorMessage: String? = nil
-    @Published var isLoading: Bool = false
-    @Published var clothes: [Clothing] = []
+    var errorMessage: String? = nil
+    var isLoading: Bool = false
+    var clothes: [Clothing] = []
     
     private let service: ClothingServiceProtocol
     
@@ -20,7 +22,7 @@ final class ClothingListViewModel: ObservableObject {
         self.service = service
     }
     
-    @MainActor
+    
     func loadClothes() async {
         do {
             let fetchedClothes: [Clothing] = try await service.fetchClothes()

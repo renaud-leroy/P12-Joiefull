@@ -12,10 +12,12 @@ struct ClothingDetailView: View {
     let clothing: Clothing
     
     var body: some View {
-        VStack(alignment: .leading) {
+        GeometryReader { geo in
+            VStack {
                 ClothingPictureView(clothing: clothing)
                     .scaledToFill()
-                    .frame(maxWidth: .infinity, maxHeight: 420)
+                    .frame(height: geo.size.height * 0.66)
+                    .frame(maxWidth: .infinity)
                     .cornerRadius(20)
                     .overlay(alignment: .topTrailing) {
                         ShareButtonView()
@@ -26,19 +28,21 @@ struct ClothingDetailView: View {
                             .padding(20)
                             .scaleEffect(1.2)
                     }
-            
-            PriceView(clothing: clothing)
-                .padding(.vertical, 10)
-                .font(.system(size: 16))
-            Text(clothing.picture.description)
-                .font(.system(size: 14, weight: .regular))
-            HStack {
-                RatingView()
-                Spacer()
+                VStack(alignment: .leading, spacing: 20) {
+                    PriceView(clothing: clothing)
+                        .font(.system(size: 16))
+                    Text(clothing.picture.description)
+                        .font(.system(size: 14, weight: .regular))
+                    HStack {
+                        RatingView()
+                        Spacer()
+                    }
+                    TextField("Partagez ici vos impressions sur cette pièce", text: .constant(""))
+                        .textFieldStyle(RoundedBorderTextFieldStyle())
+                }
+                .padding(.vertical)
             }
-            .padding(.vertical)
-            TextField("Partagez ici vos impressions sur cette pièce", text: .constant(""))
-                .textFieldStyle(RoundedBorderTextFieldStyle())
+            .padding(.horizontal)
         }
     }
 }

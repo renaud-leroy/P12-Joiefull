@@ -8,7 +8,7 @@
 import Foundation
 
 
-struct Clothing: Codable, Identifiable {
+struct Clothing: Codable, Identifiable, Hashable {
     let id: Int
     let picture: Picture
     let name: String
@@ -18,12 +18,12 @@ struct Clothing: Codable, Identifiable {
     let original_price: Double
 }
 
-struct Picture: Codable {
+struct Picture: Codable, Hashable {
     let url: String
     let description: String
 }
 
-enum ClothingCategory: String, Codable, CaseIterable {
+enum ClothingCategory: String, Codable, CaseIterable, Hashable {
     case accessories = "ACCESSORIES"
     case bottoms = "BOTTOMS"
     case tops = "TOPS"
@@ -38,7 +38,7 @@ extension ClothingCategory: CustomStringConvertible {
         case .bottoms:
             return "Bas"
         case .accessories:
-            return "Sacs"
+            return "Accessoires"
         case .shoes:
             return "Chaussures"
         }
