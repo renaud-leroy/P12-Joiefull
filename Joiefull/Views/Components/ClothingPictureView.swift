@@ -15,7 +15,8 @@ struct ClothingPictureView: View {
         AsyncImage(url: URL(string: clothing.picture.url)) { image in
             image
                 .resizable()
-                .aspectRatio(contentMode: .fill)
+//                .aspectRatio(contentMode: .fill)
+                .scaledToFill()
                 .clipped()
         } placeholder: {
             ProgressView()

@@ -19,7 +19,6 @@ struct PriceView: View {
                 Spacer()
                 Image("starRatingFilled")
                     .resizable()
-                    .scaledToFill()
                     .foregroundColor(Color(.starFilling))
                     .frame(maxWidth: 13, maxHeight: 13)
                 Text("4.4")

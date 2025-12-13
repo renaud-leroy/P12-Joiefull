@@ -13,18 +13,19 @@ struct RowView: View {
     
     var body: some View {
         
-        VStack {
-            VStack(spacing: 4) {
+        GeometryReader { geo in
+            VStack(alignment: .leading, spacing: 8) {
                 ClothingPictureView(clothing: clothing)
-                    .frame(maxWidth: 200, maxHeight: 200)
+                    .frame(height: geo.size.height * 0.8)
+                    .frame(maxWidth: .infinity)
                     .cornerRadius(20)
                     .overlay(alignment: .bottomTrailing) {
                         LikeCounterView(clothing: clothing)
                             .padding(12)
                     }
                 PriceView(clothing: clothing)
+                    .frame(maxWidth: .infinity)
                     .padding(.horizontal, 8)
-                    .frame(maxWidth: 200, maxHeight: 40)
                     .font(.system(size: 13))
             }
         }

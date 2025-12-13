@@ -9,8 +9,6 @@ import SwiftUI
 
 struct ClothingSplitView: View {
     
-    @Environment(\.horizontalSizeClass) private var sizeClass
-    
     @State private var selectedClothing: Clothing?
     
     var body: some View {
