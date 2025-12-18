@@ -10,18 +10,35 @@ import SwiftUI
 struct ClothingPictureView: View {
     
     let clothing: Clothing
+    var isSelected: Bool = false
     
     var body: some View {
+#if DEBUG && targetEnvironment(simulator)
+        Image("Imagemock")
+            .resizable()
+        //            .frame(maxWidth: .infinity)
+            .scaledToFill()
+            .clipped()
+        //            .cornerRadius(20)
+#else
         AsyncImage(url: URL(string: clothing.picture.url)) { image in
             image
                 .resizable()
-//                .aspectRatio(contentMode: .fill)
                 .scaledToFill()
                 .clipped()
+                .overlay(
+                    RoundedRectangle(cornerRadius: 20)
+                        .stroke(
+                            isSelected ? Color.accentColor : .clear,
+                            lineWidth: 2
+                        )
+                )
         } placeholder: {
             ProgressView()
         }
+#endif
     }
+    
 }
 
 #Preview {

@@ -10,6 +10,7 @@ import SwiftUI
 struct PriceView: View {
     
     let clothing: Clothing
+    var isSelected: Bool = false
     
     var body: some View {
         VStack(spacing: 2){
@@ -17,7 +18,7 @@ struct PriceView: View {
                 Text(clothing.name)
                     .fontWeight(.semibold)
                 Spacer()
-                Image("starRatingFilled")
+                Image(systemName: "star.fill")
                     .resizable()
                     .foregroundColor(Color(.starFilling))
                     .frame(maxWidth: 13, maxHeight: 13)
@@ -31,6 +32,7 @@ struct PriceView: View {
                     .opacity(0.7)
             }
         }
+        .foregroundColor(isSelected ? .selectItem : .primary)
     }
 }
 

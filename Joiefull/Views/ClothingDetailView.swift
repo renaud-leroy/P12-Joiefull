@@ -9,41 +9,48 @@ import SwiftUI
 
 struct ClothingDetailView: View {
     
+    @Environment(\.horizontalSizeClass) private var hSizeClass
+    
     let clothing: Clothing
+    let shareMessage = "Regarde cet article sur Joiefull"
     
     var body: some View {
-        GeometryReader { geo in
+        VStack {
             VStack {
                 ClothingPictureView(clothing: clothing)
                     .scaledToFill()
-                    .frame(height: geo.size.height * 0.66)
-                    .frame(maxWidth: .infinity)
+                    .frame(height: hSizeClass == .regular ? 700 : 400)
+                    .clipped()
                     .cornerRadius(20)
                     .overlay(alignment: .topTrailing) {
-                        ShareButtonView()
-                            .padding(20)
+                        ShareLink(item: shareMessage) {
+                            ShareButtonView()
+                                .padding(20)
+                                .scaleEffect(1.2)
+                        }
                     }
                     .overlay(alignment: .bottomTrailing) {
                         LikeCounterView(clothing: clothing)
                             .padding(20)
                             .scaleEffect(1.2)
                     }
-                VStack(alignment: .leading, spacing: 20) {
-                    PriceView(clothing: clothing)
-                        .font(.system(size: 16))
-                    Text(clothing.picture.description)
-                        .font(.system(size: 14, weight: .regular))
-                    HStack {
-                        RatingView()
-                        Spacer()
-                    }
-                    TextField("Partagez ici vos impressions sur cette pièce", text: .constant(""))
-                        .textFieldStyle(RoundedBorderTextFieldStyle())
-                }
-                .padding(.vertical)
             }
-            .padding(.horizontal)
+            .padding(.bottom)
+            VStack(alignment: .leading, spacing: 20) {
+                PriceView(clothing: clothing)
+                    .font(.default)
+                Text(clothing.picture.description)
+                    .font(.default)
+                HStack {
+                    RatingView(clothing: clothing)
+                    Spacer()
+                }
+                TextField("Partagez ici vos impressions sur cette pièce", text: .constant(""))
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
+            }
+            Spacer()
         }
+        .padding()
     }
 }
 
@@ -53,3 +60,4 @@ struct ClothingDetailView: View {
     
     ClothingDetailView(clothing: clothing)
 }
+

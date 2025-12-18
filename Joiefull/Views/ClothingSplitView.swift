@@ -13,14 +13,25 @@ struct ClothingSplitView: View {
     
     var body: some View {
         NavigationSplitView {
-            ClothingListView { clothing in
+            ClothingListView(selectedClothing: $selectedClothing) { clothing in
                 self.selectedClothing = clothing
             }
             .toolbar(.hidden)
-            .navigationSplitViewColumnWidth(800)
+            .navigationSplitViewColumnWidth(700)
         } detail: {
             if let selectedClothing {
                 ClothingDetailView(clothing: selectedClothing)
+            }
+            else {
+                VStack(spacing: 12) {
+                    Image(systemName: "tshirt")
+                        .font(.system(size: 48))
+                        .foregroundStyle(.secondary)
+                    Text("Sélectionnez un article pour voir le détail")
+                        .font(.headline)
+                        .foregroundStyle(.secondary)
+                }
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
             }
         }
     }

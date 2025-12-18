@@ -8,6 +8,11 @@
 import SwiftUI
 
 struct RatingView: View {
+    
+    let clothing: Clothing
+    @State private var localRating: Int = 0
+    
+    
     var body: some View {
         HStack(spacing: 20) {
             Image("userAvatar")
@@ -18,17 +23,24 @@ struct RatingView: View {
                 .offset(x: -5, y: 8)
                 .clipShape(Circle())
                 .clipped()
-            HStack(spacing: 15) {
-                ForEach (1...5, id: \.self) { _ in
-                    Image(systemName: "star")
-                        .font(Font.title2)
-                        .opacity(0.5)
+                .accessibilityHidden(true)
+            HStack(spacing: 14) {
+                ForEach(1...5, id: \.self) { star in
+                    Image(systemName: star <= localRating ? "star.fill" : "star")
+                        .font(Font.title)
+                        .opacity(star <= localRating ? 1 : 0.5)
+                        .foregroundColor(star <= localRating ? .starFilling : .gray)
+                        .animation(.easeInOut(duration: 0.15), value: localRating)
+                        .onTapGesture {
+                            localRating = star
+                        }
                 }
             }
+            .onChange(of: clothing.id) { _ in
+                localRating = 0
+            }
         }
+        
     }
 }
 
-#Preview {
-    RatingView()
-}

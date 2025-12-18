@@ -9,24 +9,26 @@ import SwiftUI
 
 struct ClothingListView: View {
     
-    @State var vm = ClothingListViewModel()
+    @State private var vm = ClothingListViewModel(service: ClothingService())
+    @Binding var selectedClothing: Clothing?
     let onSelect: (Clothing) -> Void
     
     var body: some View {
         ScrollView {
-            VStack(alignment: .leading, spacing: 14) {
+            VStack(alignment: .leading, spacing: 24) {
                 ForEach(ClothingCategory.allCases.sorted { $0.sortKey < $1.sortKey }, id: \.self) { category in
-                    Text(category.description.capitalized)
-                        .font(.title2.bold())
-                    
-                    ScrollView(.horizontal, showsIndicators: false) {
-                        HStack(spacing: 8) {
-                            ForEach(vm.filteredClothes(for: category)) { clothing in
-                                NavigationLink(destination: ClothingDetailView(clothing: clothing)) {
-                                    RowView(clothing: clothing)
-                                        .frame(width: 200, height: 250)
+                    VStack(alignment: .leading, spacing: 8) {
+                        Text(category.description)
+                            .font(.title2.bold())
+                            .accessibilityHidden(true)
+                        ScrollView(.horizontal, showsIndicators: false) {
+                            HStack(spacing: 10) {
+                                ForEach(vm.filteredClothes(for: category)) { clothing in
+                                    NavigationLink(destination: ClothingDetailView(clothing: clothing)) {
+                                        RowView(clothing: clothing)
+                                    }
+                                    .buttonStyle(.plain)
                                 }
-                                .buttonStyle(.plain)
                             }
                         }
                     }
@@ -38,12 +40,6 @@ struct ClothingListView: View {
             }
         }
     }
-}
-
-
-
-#Preview {
-    ClothingListView { _ in }
 }
 
 

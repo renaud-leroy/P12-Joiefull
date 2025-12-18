@@ -9,24 +9,32 @@ import SwiftUI
 
 struct LikeCounterView: View {
     
+    @State private var isLiked: Bool = false
+    
     let clothing: Clothing
+
+    private var displayedLikes: Int {
+            clothing.likes + (isLiked ? 1 : 0)
+        }
     
     var body: some View {
-        HStack(spacing: 2) {
-            Image(systemName: "heart")
-            Text("\(clothing.likes)")
-        }
-        .font(.system(size: 13, weight: .medium))
-        .padding(6)
-        .background(Color(.white))
-        .clipShape(Capsule())
-        .foregroundStyle(Color(.black))
+                HStack(spacing: 2) {
+                    Button {
+                        isLiked.toggle()
+                    } label: {
+                        Image(systemName: isLiked ? "heart.fill" : "heart")
+                    }
+                    Text("\(displayedLikes)")
+                }
+                .font(.subheadline.weight(.semibold))
+                .padding(6)
+                .background(Color(.white))
+                .clipShape(Capsule())
+                .foregroundStyle(Color(.black))
+                .onChange(of: clothing.id) { _ in
+                    isLiked = false
+                }
+            }
     }
-}
 
-#Preview {
-    let picture = Picture(url: "imagemock", description: "Pull vert forêt à motif torsadé élégant, tricot finement travaillé avec manches bouffantes et col montant; doux et chaleureux.")
-    let clothing = Clothing(id: 1, picture: picture, name: "Pull torsadé", category: .tops, likes: 56, price: 69.0, original_price: 95.0)
-    
-    LikeCounterView(clothing: clothing)
-}
+

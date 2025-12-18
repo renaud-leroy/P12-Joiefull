@@ -9,9 +9,9 @@ import SwiftUI
 
 struct ShareButtonView: View {
     var body: some View {
-        Image("shareIcon")
-            .font(.system(size: 18, weight: .medium))
-            .foregroundStyle(Color(.black))
+        Image(systemName: "square.and.arrow.up.circle.fill")
+            .font(.title.weight(.semibold))
+            .foregroundStyle(Color(.white))
     }
 }
 

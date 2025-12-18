@@ -8,12 +8,12 @@
 import Foundation
 
 
-struct Clothing: Codable, Identifiable, Hashable {
+struct Clothing: Codable, Identifiable, Hashable, Equatable {
     let id: Int
     let picture: Picture
     let name: String
     let category: ClothingCategory
-    let likes: Int
+    var likes: Int
     let price: Double
     let original_price: Double
 }

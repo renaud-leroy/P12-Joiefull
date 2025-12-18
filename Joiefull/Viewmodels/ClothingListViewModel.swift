@@ -18,7 +18,7 @@ final class ClothingListViewModel {
     
     private let service: ClothingServiceProtocol
     
-    init(service: ClothingServiceProtocol = ClothingService()) {
+    init(service: ClothingServiceProtocol) {
         self.service = service
     }
     
