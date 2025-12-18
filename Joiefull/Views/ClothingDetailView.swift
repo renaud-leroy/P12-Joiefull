@@ -28,19 +28,24 @@ struct ClothingDetailView: View {
                                 .padding(20)
                                 .scaleEffect(1.2)
                         }
-                    }
+                        .accessibilityLabel(Text("Partager l’article"))                    }
                     .overlay(alignment: .bottomTrailing) {
                         LikeCounterView(clothing: clothing)
                             .padding(20)
                             .scaleEffect(1.2)
+                            .accessibilityHidden(true)
                     }
             }
             .padding(.bottom)
             VStack(alignment: .leading, spacing: 20) {
                 PriceView(clothing: clothing)
                     .font(.default)
+                    .accessibilityLabel(
+                        Text("Prix : \(Int(clothing.price)) euros")
+                    )
                 Text(clothing.picture.description)
                     .font(.default)
+                    .accessibilityHidden(true)
                 HStack {
                     RatingView(clothing: clothing)
                     Spacer()

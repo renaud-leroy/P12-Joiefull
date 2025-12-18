@@ -25,13 +25,16 @@ struct ClothingSplitView: View {
             else {
                 VStack(spacing: 12) {
                     Image(systemName: "tshirt")
-                        .font(.system(size: 48))
-                        .foregroundStyle(.secondary)
+                        .font(.largeTitle)
+                        .accessibilityHidden(true)
                     Text("Sélectionnez un article pour voir le détail")
                         .font(.headline)
-                        .foregroundStyle(.secondary)
+                        .accessibilityLabel(
+                            Text("Aucun article sélectionné. Sélectionnez un article dans la liste.")
+                        )
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .foregroundStyle(.secondary)
             }
         }
     }

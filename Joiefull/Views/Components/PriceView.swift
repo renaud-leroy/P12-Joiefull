@@ -33,6 +33,10 @@ struct PriceView: View {
             }
         }
         .foregroundColor(isSelected ? .selectItem : .primary)
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel(
+            Text("Prix : \(Int(clothing.price)) euros, au lieu de \(Int(clothing.original_price)) euros")
+        )
     }
 }
 

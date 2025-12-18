@@ -38,6 +38,12 @@ struct RowView: View {
                 .accessibilityHidden(true)
         }
         .frame(maxWidth: 200, maxHeight: 250)
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel(
+            Text("\(clothing.name), \(Int(clothing.price)) euros, \(clothing.likes) mentions j’aime")
+        )
+        .accessibilityHint(Text("Double tapez pour afficher le détail"))
+        .accessibilityAddTraits(isSelected ? .isSelected : [])
     }
 }
 
