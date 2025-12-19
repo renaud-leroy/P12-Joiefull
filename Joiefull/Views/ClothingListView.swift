@@ -14,30 +14,35 @@ struct ClothingListView: View {
     let onSelect: (Clothing) -> Void
     
     var body: some View {
-        ScrollView {
-            VStack(alignment: .leading, spacing: 24) {
-                ForEach(ClothingCategory.allCases.sorted { $0.sortKey < $1.sortKey }, id: \.self) { category in
-                    VStack(alignment: .leading, spacing: 8) {
-                        Text(category.description)
-                            .font(.title2.bold())
-                            .accessibilityHidden(true)
-                        ScrollView(.horizontal, showsIndicators: false) {
-                            HStack(spacing: 10) {
-                                ForEach(vm.filteredClothes(for: category)) { clothing in
-                                    NavigationLink(destination: ClothingDetailView(clothing: clothing)) {
-                                        RowView(clothing: clothing)
-                                    }
-                                    .buttonStyle(.plain)
+        List {
+            ForEach(
+                ClothingCategory.allCases.sorted { $0.sortKey < $1.sortKey },
+                id: \.self
+            ) { category in
+                Section {
+                    ScrollView(.horizontal, showsIndicators: false) {
+                        HStack(spacing: 10) {
+                            ForEach(vm.filteredClothes(for: category)) { clothing in
+                                NavigationLink(destination: ClothingDetailView(clothing: clothing)) {
+                                    RowView(clothing: clothing)
                                 }
+                                .buttonStyle(.plain)
                             }
                         }
+                        .padding(.horizontal)
                     }
+                    .listRowInsets(.init(top: 8, leading: 0, bottom: 16, trailing: 0))
+                    .listRowSeparator(.hidden)
+                } header: {
+                    Text(category.description)
+                        .font(.title2.bold())
+                        .foregroundStyle(Color(.label))
                 }
             }
-            .padding()
-            .task {
-                await vm.loadClothes()
-            }
+        }
+        .listStyle(.plain)
+        .task {
+            await vm.loadClothes()
         }
     }
 }

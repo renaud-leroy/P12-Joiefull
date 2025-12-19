@@ -13,14 +13,6 @@ struct ClothingPictureView: View {
     var isSelected: Bool = false
     
     var body: some View {
-#if DEBUG && targetEnvironment(simulator)
-        Image("Imagemock")
-            .resizable()
-        //            .frame(maxWidth: .infinity)
-            .scaledToFill()
-            .clipped()
-        //            .cornerRadius(20)
-#else
         AsyncImage(url: URL(string: clothing.picture.url)) { image in
             image
                 .resizable()
@@ -36,9 +28,7 @@ struct ClothingPictureView: View {
         } placeholder: {
             ProgressView()
         }
-#endif
     }
-    
 }
 
 #Preview {
