@@ -34,7 +34,7 @@ struct LikeCounterView: View {
         .accessibilityElement(children: .ignore)
         .accessibilityLabel(Text("\(displayedLikes) mentions j’aime"))
         .accessibilityHint(Text(isLiked ? "Retirer des favoris" : "Ajouter aux favoris"))
-        .onChange(of: clothing.id) { _ in
+        .onChange(of: clothing.id) {
             isLiked = false
         }
     }
