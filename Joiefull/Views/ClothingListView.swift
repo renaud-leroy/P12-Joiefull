@@ -10,8 +10,10 @@ import SwiftUI
 struct ClothingListView: View {
     
     @State private var vm = ClothingListViewModel(service: ClothingService())
+    @State private var searchQuery: String = ""
     @Binding var selectedClothing: Clothing?
     let onSelect: (Clothing) -> Void
+    
     
     var body: some View {
         List {
@@ -22,9 +24,16 @@ struct ClothingListView: View {
                 Section {
                     ScrollView(.horizontal, showsIndicators: false) {
                         HStack(spacing: 10) {
-                            ForEach(vm.filteredClothes(for: category)) { clothing in
+                            ForEach(vm.searchedClothes(for: category, query: searchQuery)) { clothing in
                                 NavigationLink(destination: ClothingDetailView(clothing: clothing)) {
                                     RowView(clothing: clothing)
+                                        .accessibilityElement(children: .ignore)
+                                        .accessibilityLabel(
+                                            Text("\(clothing.name), \(Int(clothing.price)) euros, \(clothing.likes) likes")
+                                        )
+                                        .accessibilityHint(
+                                            Text("Afficher le détail de l’article")
+                                        )
                                 }
                                 .buttonStyle(.plain)
                             }
@@ -41,11 +50,18 @@ struct ClothingListView: View {
             }
         }
         .listStyle(.plain)
+        .searchable(text: $searchQuery, prompt: "Rechercher un article")
+        .searchToolbarBehavior(SearchToolbarBehavior.minimize)
         .task {
             await vm.loadClothes()
         }
     }
 }
+
+
+
+
+
 
 
 

@@ -29,7 +29,6 @@ struct ClothingSplitView: View {
                 ) { clothing in
                     selectedClothing = clothing
                 }
-                .toolbar(.hidden)
                 .navigationSplitViewColumnWidth(700)
             } detail: {
                 if let selectedClothing {
@@ -51,12 +50,4 @@ struct ClothingSplitView: View {
             }
         }
     }
-}
-
-
-#Preview {
-    let picture = Picture(url: "imagemock", description: "Pull vert forêt à motif torsadé élégant, tricot finement travaillé avec manches bouffantes et col montant; doux et chaleureux.")
-    let clothing = Clothing(id: 1, picture: picture, name: "Pull torsadé", category: .tops, likes: 56, price: 69.0, original_price: 95.0)
-    
-    ClothingSplitView()
 }

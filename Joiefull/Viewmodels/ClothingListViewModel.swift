@@ -34,7 +34,12 @@ final class ClothingListViewModel {
     }
     
     
-    func filteredClothes(for category: ClothingCategory) -> [Clothing] {
-        clothes.filter { $0.category == category }
+    func searchedClothes(for category: ClothingCategory, query: String) -> [Clothing] {
+        clothes.filter { clothing in
+            clothing.category == category &&
+            (query.isEmpty ||
+             clothing.name.localizedCaseInsensitiveContains(query))
+        }
+        
     }
 }

@@ -16,24 +16,28 @@ struct ClothingDetailView: View {
     
     var body: some View {
         VStack {
-            VStack {
+            VStack {   
                 ClothingPictureView(clothing: clothing)
                     .scaledToFill()
                     .frame(height: hSizeClass == .regular ? 700 : 400)
                     .clipped()
                     .cornerRadius(20)
+                    .accessibilityLabel(
+                        Text("Image du vêtement : \(clothing.picture.description)")
+                    )
                     .overlay(alignment: .topTrailing) {
-                        ShareLink(item: shareMessage) {
+                        ShareLink(item: clothing.name) {
                             ShareButtonView()
                                 .padding(20)
                                 .scaleEffect(1.2)
                         }
-                        .accessibilityLabel(Text("Partager l’article"))                    }
+                        .accessibilityLabel(Text("Partager l’article"))
+                        .accessibilityHint(Text("Ouvre le menu de partage"))
+                    }
                     .overlay(alignment: .bottomTrailing) {
                         LikeCounterView(clothing: clothing)
                             .padding(20)
                             .scaleEffect(1.2)
-                            .accessibilityHidden(true)
                     }
             }
             .padding(.bottom)
@@ -48,6 +52,8 @@ struct ClothingDetailView: View {
                     .accessibilityHidden(true)
                 HStack {
                     RatingView(clothing: clothing)
+                        .accessibilityElement(children: .ignore)
+                        .accessibilityLabel(Text("Note moyenne de l’article"))
                     Spacer()
                 }
                 TextField("Partagez ici vos impressions sur cette pièce", text: .constant(""))
